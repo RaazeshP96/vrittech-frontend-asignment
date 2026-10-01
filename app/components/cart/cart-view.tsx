@@ -40,6 +40,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { CartItem } from "@/app/types";
+import { toast } from "sonner";
 
 export const CartView = () => {
   const mounted = useMounted();
@@ -49,6 +51,18 @@ export const CartView = () => {
   const setQuantity = useCartStore((s) => s.setQuantity);
   const removeItem = useCartStore((s) => s.removeItem);
   const clear = useCartStore((s) => s.clear);
+  const addItem = useCartStore((s) => s.addItem);
+
+  const handleRemove = (item: CartItem) => {
+    removeItem(item.product.id);
+    toast("Removed from cart", {
+      description: item.product.title,
+      action: {
+        label: "Undo",
+        onClick: () => addItem(item.product, item.quantity),
+      },
+    });
+  };
 
   if (!mounted) {
     return (
@@ -106,7 +120,7 @@ export const CartView = () => {
                       variant="ghost"
                       size="icon"
                       aria-label={`Remove ${product.title}`}
-                      onClick={() => removeItem(product.id)}
+                      onClick={() => handleRemove({ product, quantity })}
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>

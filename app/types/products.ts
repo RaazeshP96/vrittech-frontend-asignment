@@ -33,3 +33,10 @@ export type PaginationProps = {
 };
 
 export type SortOrder = "asc" | "desc";
+
+export type ProductsExplorerProps = {
+  products: Product[];
+  categories: string[];
+};
+
+export type PriceRange = [number, number];

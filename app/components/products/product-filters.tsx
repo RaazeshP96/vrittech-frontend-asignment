@@ -1,6 +1,7 @@
 "use client";
 
-import { ProductFiltersProps } from "@/app/types";
+import { formatPrice } from "@/app/lib/format";
+import { PriceRange } from "@/app/types/products";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,18 +12,35 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
+
+export type FilterValues = {
+  search: string;
+  category: string;
+  priceRange: PriceRange;
+};
+
+type ProductFiltersProps = {
+  values: FilterValues;
+  categories: string[];
+  priceBounds: PriceRange;
+  onChange: (next: Partial<FilterValues>) => void;
+  onReset: () => void;
+};
 
 export function ProductFilters({
   values,
   categories,
-  invalidRange,
+  priceBounds,
   onChange,
   onReset,
 }: ProductFiltersProps) {
+  const sliderDisabled = priceBounds[0] === priceBounds[1];
+
   return (
     <section
       aria-label="Filter products"
-      className="mb-8 grid gap-4 rounded-xl border p-4 sm:grid-cols-2 lg:grid-cols-[2fr_1.5fr_1fr_1fr_auto] lg:items-end"
+      className="mb-8 grid gap-6 rounded-xl border p-4 sm:grid-cols-2 lg:grid-cols-[2fr_1.5fr_2fr_auto] lg:items-end"
     >
       <div className="space-y-2">
         <Label htmlFor="search">Search</Label>
@@ -59,48 +77,32 @@ export function ProductFilters({
         </Select>
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="min-price">Min price</Label>
-        <Input
-          id="min-price"
-          type="number"
-          min={0}
-          inputMode="decimal"
-          placeholder="0"
-          value={values.minPrice}
-          aria-invalid={invalidRange}
-          onChange={(e) => onChange({ minPrice: e.target.value })}
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="max-price">Max price</Label>
-        <Input
-          id="max-price"
-          type="number"
-          min={0}
-          inputMode="decimal"
-          placeholder="Any"
-          value={values.maxPrice}
-          aria-invalid={invalidRange}
-          onChange={(e) => onChange({ maxPrice: e.target.value })}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <Label>Price range</Label>
+          <span className="text-sm tabular-nums text-muted-foreground">
+            {formatPrice(values.priceRange[0])} –{" "}
+            {formatPrice(values.priceRange[1])}
+          </span>
+        </div>
+        <Slider
+          aria-label="Price range"
+          min={priceBounds[0]}
+          max={priceBounds[1]}
+          step={1}
+          disabled={sliderDisabled}
+          value={values.priceRange}
+          onValueChange={(value) => {
+            if (Array.isArray(value) && value.length === 2) {
+              onChange({ priceRange: [value[0], value[1]] });
+            }
+          }}
         />
       </div>
 
       <Button variant="outline" onClick={onReset}>
         Reset
       </Button>
-
-      {invalidRange && (
-        <p
-          role="alert"
-          className="text-sm text-destructive sm:col-span-2 lg:col-span-5"
-        >
-          {
-            " Min price can't be higher than max price. The price filter is ignored  until this is fixed."
-          }
-        </p>
-      )}
     </section>
   );
 }

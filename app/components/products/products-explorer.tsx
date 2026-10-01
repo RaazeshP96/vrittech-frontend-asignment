@@ -1,60 +1,54 @@
 "use client";
 
 import { useMemo, useState } from "react";
+
 import { Button } from "@/components/ui/button";
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from "@/components/ui/empty";
+import { PriceRange, ProductsExplorerProps } from "@/app/types/products";
+import { FilterValues, ProductFilters } from "./product-filters";
+import { Pagination } from "./pagination";
 import { ProductCard } from "./product-card";
-import { FilterValues, Product } from "@/app/types";
-import { ProductFilters } from "./product-filters";
 
 const PAGE_SIZE = 4;
-
-interface ProductsExplorerProps {
-  products: Product[];
-  categories: string[];
-}
-
-const initialFilters: FilterValues = {
-  search: "",
-  category: "all",
-  minPrice: "",
-  maxPrice: "",
-};
-
-const parsePrice = (value: string): number | null => {
-  if (value.trim() === "") return null;
-  const n = Number(value);
-  return Number.isNaN(n) ? null : n;
-};
 
 export const ProductsExplorer = ({
   products,
   categories,
 }: ProductsExplorerProps) => {
-  const [page, setPage] = useState(1);
+  const priceBounds = useMemo<PriceRange>(() => {
+    if (products.length === 0) return [0, 0];
+    const prices = products.map((p) => p.price);
+    return [Math.floor(Math.min(...prices)), Math.ceil(Math.max(...prices))];
+  }, [products]);
+
+  const initialFilters: FilterValues = {
+    search: "",
+    category: "all",
+    priceRange: priceBounds,
+  };
+
   const [filters, setFilters] = useState<FilterValues>(initialFilters);
-  const min = parsePrice(filters.minPrice);
-  const max = parsePrice(filters.maxPrice);
-  const invalidRange = min !== null && max !== null && min > max;
+  const [page, setPage] = useState(1);
 
   const filtered = useMemo(() => {
     const query = filters.search.trim().toLowerCase();
+    const [min, max] = filters.priceRange;
 
     return products.filter((product) => {
       if (query && !product.title.toLowerCase().includes(query)) return false;
-      if (filters.category !== "all" && product.category !== filters.category)
+      if (filters.category !== "all" && product.category !== filters.category) {
         return false;
-      if (!invalidRange) {
-        if (min !== null && product.price < min) return false;
-        if (max !== null && product.price > max) return false;
       }
+      if (product.price < min || product.price > max) return false;
       return true;
     });
-  }, [products, filters.search, filters.category, min, max, invalidRange]);
-
-  const totalPages = Math.max(1, Math.ceil(products.length / PAGE_SIZE));
-  const currentPage = Math.min(page, totalPages);
-  const start = (currentPage - 1) * PAGE_SIZE;
-  const visible = filtered.slice(start, start + PAGE_SIZE);
+  }, [products, filters]);
 
   const handleChange = (next: Partial<FilterValues>) => {
     setFilters((current) => ({ ...current, ...next }));
@@ -66,58 +60,50 @@ export const ProductsExplorer = ({
     setPage(1);
   };
 
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const currentPage = Math.min(page, totalPages);
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const visible = filtered.slice(start, start + PAGE_SIZE);
+
   return (
     <>
       <ProductFilters
         values={filters}
         categories={categories}
-        invalidRange={invalidRange}
+        priceBounds={priceBounds}
         onChange={handleChange}
         onReset={handleReset}
       />
-      <p className="mb-6 text-muted-foreground">
-        Showing {visible.length} of {products.length} items
+
+      <p className="mb-6 text-muted-foreground" aria-live="polite">
+        Showing {visible.length} of {filtered.length} items
       </p>
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {visible.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
-
-      {totalPages > 1 && (
-        <nav
-          aria-label="Pagination"
-          className="mt-10 flex flex-wrap items-center justify-center gap-2"
-        >
-          <Button
-            variant="outline"
-            disabled={currentPage === 1}
-            onClick={() => setPage(currentPage - 1)}
-          >
-            Previous
-          </Button>
-
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-            <Button
-              key={p}
-              variant={p === currentPage ? "default" : "outline"}
-              aria-current={p === currentPage ? "page" : undefined}
-              onClick={() => setPage(p)}
-            >
-              {p}
-            </Button>
+      {filtered.length === 0 ? (
+        <Empty className="border border-dashed">
+          <EmptyHeader>
+            <EmptyTitle>No products found</EmptyTitle>
+            <EmptyDescription>
+              Try changing or clearing your filters.
+            </EmptyDescription>
+          </EmptyHeader>
+          <EmptyContent>
+            <Button onClick={handleReset}>Clear filters</Button>
+          </EmptyContent>
+        </Empty>
+      ) : (
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {visible.map((product) => (
+            <ProductCard key={product.id} product={product} />
           ))}
-
-          <Button
-            variant="outline"
-            disabled={currentPage === totalPages}
-            onClick={() => setPage(currentPage + 1)}
-          >
-            Next
-          </Button>
-        </nav>
+        </div>
       )}
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setPage}
+      />
     </>
   );
 };
