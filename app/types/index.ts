@@ -7,3 +7,5 @@ export type {
 } from "./products";
 
 export type { CartItem, CartState } from "./cart";
+
+export type { ErrorStateProps } from "./error";
