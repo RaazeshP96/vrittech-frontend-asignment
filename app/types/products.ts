@@ -10,3 +10,18 @@ export interface Product {
     count: number;
   };
 }
+
+export type FilterValues = {
+  search: string;
+  category: string;
+  minPrice: string;
+  maxPrice: string;
+};
+
+export type ProductFiltersProps = {
+  values: FilterValues;
+  categories: string[];
+  invalidRange: boolean;
+  onChange: (next: Partial<FilterValues>) => void;
+  onReset: () => void;
+};

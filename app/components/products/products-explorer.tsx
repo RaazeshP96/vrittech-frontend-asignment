@@ -2,14 +2,35 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Product } from "../types";
 import { ProductCard } from "./product-card";
+import { FilterValues, Product } from "@/app/types";
 
 const PAGE_SIZE = 4;
 
-export const ProductsExplorer = ({ products }: { products: Product[] }) => {
-  const [page, setPage] = useState(1);
+interface ProductsExplorerProps {
+  products: Product[];
+  categories: string[];
+}
 
+const initialFilters: FilterValues = {
+  search: "",
+  category: "all",
+  minPrice: "",
+  maxPrice: "",
+};
+
+const parsePrice = (value: string): number | null => {
+  if (value.trim() === "") return null;
+  const n = Number(value);
+  return Number.isNaN(n) ? null : n;
+};
+
+export const ProductsExplorer = ({
+  products,
+  categories,
+}: ProductsExplorerProps) => {
+  const [page, setPage] = useState(1);
+  const [filters, setFilters] = useState<FilterValues>(initialFilters);
   const totalPages = Math.max(1, Math.ceil(products.length / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);
   const start = (currentPage - 1) * PAGE_SIZE;

@@ -4,9 +4,9 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Product } from "../types";
-import { formatPrice } from "../lib/format";
 import { ProductRating } from "./product-rating";
+import { Product } from "@/app/types";
+import { formatPrice } from "@/app/lib/format";
 
 type ProductDetailProps = {
   product: Product;
