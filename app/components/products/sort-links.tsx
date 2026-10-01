@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { cn } from "cn";
 import Link from "next/link";
 
@@ -11,18 +12,18 @@ export function SortLinks({ current }: { current?: "asc" | "desc" }) {
   return (
     <nav aria-label="Sort products" className="flex gap-2">
       {options.map((option) => (
-        <Link
+        <Button
           key={option.label}
-          href={option.href}
-          aria-current={current === option.value ? "true" : undefined}
-          className={cn(
-            "rounded-md border px-3 py-1.5 text-sm transition-colors hover:bg-accent",
-            current === option.value &&
-              "bg-primary text-primary-foreground hover:bg-primary",
-          )}
+          size="sm"
+          variant={current === option.value ? "default" : "outline"}
         >
-          {option.label}
-        </Link>
+          <Link
+            href={option.href}
+            aria-current={current === option.value ? "true" : undefined}
+          >
+            {option.label}
+          </Link>
+        </Button>
       ))}
     </nav>
   );
