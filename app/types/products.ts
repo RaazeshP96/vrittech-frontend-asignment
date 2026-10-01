@@ -25,3 +25,11 @@ export type ProductFiltersProps = {
   onChange: (next: Partial<FilterValues>) => void;
   onReset: () => void;
 };
+
+export type PaginationProps = {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+};
+
+export type SortOrder = "asc" | "desc";

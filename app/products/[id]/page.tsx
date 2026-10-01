@@ -9,19 +9,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { ProductDetail } from "@/app/components";
-
-const getProduct = async (id: string) => {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/products/${id}`,
-    );
-
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching products:", error);
-    return [];
-  }
-};
+import { getProduct } from "@/app/lib/api/product";
 
 const ProductPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;

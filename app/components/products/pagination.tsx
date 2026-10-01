@@ -1,5 +1,6 @@
 "use client";
 
+import { PaginationProps } from "@/app/types";
 import {
   Pagination as ShadcnPagination,
   PaginationContent,
@@ -9,12 +10,6 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { cn } from "cn";
-
-type PaginationProps = {
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
-};
 
 export const Pagination = ({
   currentPage,

@@ -1,1 +1,7 @@
-export type { Product, FilterValues, ProductFiltersProps } from "./products";
+export type {
+  Product,
+  FilterValues,
+  ProductFiltersProps,
+  SortOrder,
+  PaginationProps,
+} from "./products";
