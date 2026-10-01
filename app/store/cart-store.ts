@@ -1,18 +1,8 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { Product } from "../types";
-
-export type CartItem = { product: Product; quantity: number };
+import { CartState } from "../types";
 
 const MAX_QUANTITY = 99;
-
-type CartState = {
-  items: CartItem[];
-  addItem: (product: Product, quantity?: number) => void;
-  setQuantity: (productId: number, quantity: number) => void;
-  removeItem: (productId: number) => void;
-  clear: () => void;
-};
 
 export const useCartStore = create<CartState>()(
   persist(

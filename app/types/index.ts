@@ -5,3 +5,5 @@ export type {
   SortOrder,
   PaginationProps,
 } from "./products";
+
+export type { CartItem, CartState } from "./cart";
