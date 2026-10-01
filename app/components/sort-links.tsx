@@ -1,5 +1,5 @@
+import { cn } from "cn";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 
 const options = [
   { label: "Default", value: undefined, href: "/products" },
