@@ -58,7 +58,7 @@ export const ProductsExplorer = ({
 
   const handleChange = (next: Partial<FilterValues>) => {
     setFilters((current) => ({ ...current, ...next }));
-    setPage(1); // a filter change always goes back to page 1
+    setPage(1);
   };
 
   const handleReset = () => {
