@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Product } from "../types";
+import { formatPrice } from "../lib/format";
 
 export const ProductCard = ({ product }: { product: Product }) => {
   return (
@@ -37,7 +38,7 @@ export const ProductCard = ({ product }: { product: Product }) => {
       </CardHeader>
 
       <CardContent className="mt-auto flex items-center justify-between">
-        <span className="text-xl font-bold">${product.price.toFixed(2)}</span>
+        <span className="text-xl font-bold">{formatPrice(product.price)}</span>
         {product.rating && (
           <span className="flex items-center gap-1 text-sm text-muted-foreground">
             <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
