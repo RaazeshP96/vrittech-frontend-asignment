@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "./product-card";
 import { FilterValues, Product } from "@/app/types";
+import { ProductFilters } from "./product-filters";
 
 const PAGE_SIZE = 4;
 
@@ -31,13 +32,49 @@ export const ProductsExplorer = ({
 }: ProductsExplorerProps) => {
   const [page, setPage] = useState(1);
   const [filters, setFilters] = useState<FilterValues>(initialFilters);
+  const min = parsePrice(filters.minPrice);
+  const max = parsePrice(filters.maxPrice);
+  const invalidRange = min !== null && max !== null && min > max;
+
+  const filtered = useMemo(() => {
+    const query = filters.search.trim().toLowerCase();
+
+    return products.filter((product) => {
+      if (query && !product.title.toLowerCase().includes(query)) return false;
+      if (filters.category !== "all" && product.category !== filters.category)
+        return false;
+      if (!invalidRange) {
+        if (min !== null && product.price < min) return false;
+        if (max !== null && product.price > max) return false;
+      }
+      return true;
+    });
+  }, [products, filters.search, filters.category, min, max, invalidRange]);
+
   const totalPages = Math.max(1, Math.ceil(products.length / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);
   const start = (currentPage - 1) * PAGE_SIZE;
-  const visible = products.slice(start, start + PAGE_SIZE);
+  const visible = filtered.slice(start, start + PAGE_SIZE);
+
+  const handleChange = (next: Partial<FilterValues>) => {
+    setFilters((current) => ({ ...current, ...next }));
+    setPage(1); // a filter change always goes back to page 1
+  };
+
+  const handleReset = () => {
+    setFilters(initialFilters);
+    setPage(1);
+  };
 
   return (
     <>
+      <ProductFilters
+        values={filters}
+        categories={categories}
+        invalidRange={invalidRange}
+        onChange={handleChange}
+        onReset={handleReset}
+      />
       <p className="mb-6 text-muted-foreground">
         Showing {visible.length} of {products.length} items
       </p>

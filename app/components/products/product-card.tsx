@@ -10,8 +10,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Product } from "../types";
-import { formatPrice } from "../lib/format";
+import { Product } from "@/app/types";
+import { formatPrice } from "@/app/lib/format";
 
 export const ProductCard = ({ product }: { product: Product }) => {
   return (
