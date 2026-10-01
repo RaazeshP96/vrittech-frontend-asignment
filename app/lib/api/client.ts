@@ -1,10 +1,10 @@
 import { BASE_URL } from "../constant";
 import { ApiError } from "./errors";
 
-export async function apiFetch<T>(
+export const apiFetch = async <T>(
   path: string,
   init?: RequestInit,
-): Promise<T> {
+): Promise<T> => {
   if (!BASE_URL) {
     throw new ApiError("NEXT_PUBLIC_API_BASE_URL is not set", "config");
   }
@@ -34,4 +34,4 @@ export async function apiFetch<T>(
   } catch {
     throw new ApiError(`Invalid JSON from ${path}`, "parse", res.status);
   }
-}
+};
