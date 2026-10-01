@@ -21,6 +21,25 @@ import {
 } from "@/app/store/cart-store";
 import { formatPrice } from "@/app/lib/format";
 import { QuantitySelector } from "./quantity-selector";
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from "@/components/ui/empty";
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export const CartView = () => {
   const mounted = useMounted();
@@ -42,15 +61,19 @@ export const CartView = () => {
 
   if (items.length === 0) {
     return (
-      <div className="rounded-xl border border-dashed py-16 text-center">
-        <h2 className="mb-1 text-lg font-semibold">Your cart is empty</h2>
-        <p className="mb-4 text-muted-foreground">
-          Add something from the products page.
-        </p>
-        <Button>
-          <Link href="/products">Browse products</Link>
-        </Button>
-      </div>
+      <Empty className="border border-dashed">
+        <EmptyHeader>
+          <EmptyTitle>Your cart is empty</EmptyTitle>
+          <EmptyDescription>
+            Add something from the products page.
+          </EmptyDescription>
+        </EmptyHeader>
+        <EmptyContent>
+          <Button>
+            <Link href="/products">Browse products</Link>
+          </Button>
+        </EmptyContent>
+      </Empty>
     );
   }
 
@@ -127,9 +150,27 @@ export const CartView = () => {
           </div>
         </CardContent>
         <CardFooter>
-          <Button variant="outline" className="w-full" onClick={clear}>
-            Clear cart
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger>
+              <Button variant="outline" className="w-full">
+                Clear cart
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Clear your cart?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  {`This removes all ${count} items. You can't undo this.`}
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={clear}>
+                  Clear cart
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </CardFooter>
       </Card>
     </div>

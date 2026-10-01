@@ -96,8 +96,9 @@ export function ProductFilters({
           role="alert"
           className="text-sm text-destructive sm:col-span-2 lg:col-span-5"
         >
-          Min price can&apos;t be higher than max price. The price filter is
-          ignored until this is fixed.
+          {
+            " Min price can't be higher than max price. The price filter is ignored  until this is fixed."
+          }
         </p>
       )}
     </section>

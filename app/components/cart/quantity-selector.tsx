@@ -2,6 +2,7 @@
 
 import { Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 
 type QuantitySelectorProps = {
   value: number;
@@ -10,18 +11,14 @@ type QuantitySelectorProps = {
   max?: number;
 };
 
-export const QuantitySelector = ({
+export function QuantitySelector({
   value,
   onChange,
   min = 1,
   max = 99,
-}: QuantitySelectorProps) => {
+}: QuantitySelectorProps) {
   return (
-    <div
-      className="inline-flex items-center gap-2"
-      role="group"
-      aria-label="Quantity"
-    >
+    <ButtonGroup aria-label="Quantity">
       <Button
         type="button"
         variant="outline"
@@ -30,9 +27,12 @@ export const QuantitySelector = ({
         disabled={value <= min}
         onClick={() => onChange(value - 1)}
       >
-        <Minus className="h-4 w-4" />
+        <Minus />
       </Button>
-      <span className="w-8 text-center tabular-nums" aria-live="polite">
+      <span
+        className="flex min-w-10 items-center justify-center border-y px-3 text-sm tabular-nums"
+        aria-live="polite"
+      >
         {value}
       </span>
       <Button
@@ -43,8 +43,8 @@ export const QuantitySelector = ({
         disabled={value >= max}
         onClick={() => onChange(value + 1)}
       >
-        <Plus className="h-4 w-4" />
+        <Plus />
       </Button>
-    </div>
+    </ButtonGroup>
   );
-};
+}
