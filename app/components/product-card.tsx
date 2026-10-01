@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Product } from "../types";
 
-export function ProductCard({ product }: { product: Product }) {
+export const ProductCard = ({ product }: { product: Product }) => {
   return (
     <Card className="group flex h-full flex-col overflow-hidden transition-shadow hover:shadow-lg">
       <Link href={`/products/${product.id}`} className="block">
@@ -53,4 +53,4 @@ export function ProductCard({ product }: { product: Product }) {
       </CardFooter>
     </Card>
   );
-}
+};
