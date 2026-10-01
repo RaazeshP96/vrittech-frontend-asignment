@@ -1,3 +1,4 @@
+import { ProductCard } from "../components";
 import { Product } from "../types";
 
 const getProducts = async () => {
@@ -17,13 +18,19 @@ const ProductsPage = async () => {
   const products = await getProducts();
 
   return (
-    <main className="mx-auto max-w-5xl px-4 py-8">
-      <h1 className="mb-4 text-3xl font-bold">Products</h1>
-      <ul className="space-y-2">
+    <main className="mx-auto max-w-7xl px-4 py-10">
+      <header className="mb-8">
+        <h1 className="text-3xl font-bold tracking-tight">Products</h1>
+        <p className="text-muted-foreground">
+          {products.length} items available
+        </p>
+      </header>
+
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {products.map((product: Product) => (
-          <li key={product.id}>{product.title}</li>
+          <ProductCard key={product.id} product={product} />
         ))}
-      </ul>
+      </div>
     </main>
   );
 };
