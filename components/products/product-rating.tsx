@@ -1,6 +1,6 @@
 import { Star } from "lucide-react";
-import { Product } from "../types";
 import { cn } from "cn";
+import { Product } from "@/types";
 
 export const ProductRating = ({
   rating,

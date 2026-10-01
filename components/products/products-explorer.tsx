@@ -10,10 +10,10 @@ import {
   EmptyHeader,
   EmptyTitle,
 } from "@/components/ui/empty";
-import { PriceRange, ProductsExplorerProps } from "@/app/types/products";
 import { FilterValues, ProductFilters } from "./product-filters";
 import { Pagination } from "./pagination";
 import { ProductCard } from "./product-card";
+import { PriceRange, ProductsExplorerProps } from "@/types/products";
 
 const PAGE_SIZE = 4;
 

@@ -5,8 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ProductRating } from "./product-rating";
-import { Product } from "@/app/types";
-import { formatPrice } from "@/app/lib/format";
+import { Product } from "@/types";
+import { formatPrice } from "@/lib/format";
 
 type ProductDetailProps = {
   product: Product;

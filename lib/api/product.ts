@@ -1,4 +1,4 @@
-import { SortOrder } from "@/app/types";
+import { SortOrder } from "@/types";
 import { BASE_URL } from "../constant";
 
 export const getProducts = async (sort?: SortOrder) => {

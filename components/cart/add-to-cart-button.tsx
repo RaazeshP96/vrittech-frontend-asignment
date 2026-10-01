@@ -4,8 +4,8 @@ import { useState } from "react";
 import { ShoppingCart } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Product } from "@/app/types";
-import { useCartStore } from "@/app/store/cart-store";
+import { Product } from "@/types";
+import { useCartStore } from "@/store/cart-store";
 import { QuantitySelector } from "./quantity-selector";
 
 export function AddToCartButton({ product }: { product: Product }) {

@@ -14,7 +14,7 @@ export default function NotFound() {
       <EmptyHeader>
         <EmptyTitle>Page not found</EmptyTitle>
         <EmptyDescription>
-          {" The page or product you're looking for doesn't exist."}
+          {"The page or product you're looking for doesn't exist."}
         </EmptyDescription>
       </EmptyHeader>
       <EmptyContent>

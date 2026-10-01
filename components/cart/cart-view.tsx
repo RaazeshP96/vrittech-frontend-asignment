@@ -13,13 +13,6 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useMounted } from "@/app/lib/hooks/use-mounted";
-import {
-  selectItemCount,
-  selectTotal,
-  useCartStore,
-} from "@/app/store/cart-store";
-import { formatPrice } from "@/app/lib/format";
 import { QuantitySelector } from "./quantity-selector";
 import {
   Empty,
@@ -40,8 +33,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { CartItem } from "@/app/types";
 import { toast } from "sonner";
+import { useMounted } from "@/lib/hooks/use-mounted";
+import { selectItemCount, selectTotal, useCartStore } from "@/store/cart-store";
+import { CartItem } from "@/types";
+import { formatPrice } from "@/lib/format";
 
 export const CartView = () => {
   const mounted = useMounted();

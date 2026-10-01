@@ -8,8 +8,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { AddToCartButton, ProductDetail } from "@/app/components";
-import { getProduct } from "@/app/lib/api/product";
+import { AddToCartButton, ProductDetail } from "@/components";
+import { getProduct } from "@/lib/api/product";
 
 const ProductPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;

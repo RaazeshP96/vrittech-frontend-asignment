@@ -1,4 +1,4 @@
-import { ProductDetailSkeleton } from "@/app/components";
+import { ProductDetailSkeleton } from "@/components";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const Loading = () => {

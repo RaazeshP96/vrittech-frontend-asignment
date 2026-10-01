@@ -1,7 +1,7 @@
 "use client";
 
-import { formatPrice } from "@/app/lib/format";
-import { PriceRange } from "@/app/types/products";
+import { formatPrice } from "@/lib/format";
+import { PriceRange } from "@/types/products";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

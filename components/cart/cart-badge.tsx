@@ -4,8 +4,8 @@ import Link from "next/link";
 import { ShoppingCart } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { selectItemCount, useCartStore } from "@/app/store/cart-store";
-import { useMounted } from "@/app/lib/hooks/use-mounted";
+import { selectItemCount, useCartStore } from "@/store/cart-store";
+import { useMounted } from "@/lib/hooks/use-mounted";
 
 export function CartBadge() {
   const count = useCartStore(selectItemCount);
