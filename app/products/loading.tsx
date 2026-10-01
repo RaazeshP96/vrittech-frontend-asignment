@@ -1,4 +1,4 @@
-import { ProductCardSkeleton } from "@/components";
+import { ProductCardSkeleton } from "@/components/products/product-card-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const Loading = () => {

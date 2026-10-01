@@ -161,10 +161,10 @@ export const CartView = () => {
         </CardContent>
         <CardFooter>
           <AlertDialog>
-            <AlertDialogTrigger>
-              <Button variant="outline" className="w-full">
-                Clear cart
-              </Button>
+            <AlertDialogTrigger
+              render={<Button variant="outline" className="w-full" />}
+            >
+              Clear cart
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>

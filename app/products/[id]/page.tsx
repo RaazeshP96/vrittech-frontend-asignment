@@ -8,8 +8,9 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { AddToCartButton, ProductDetail } from "@/components";
 import { getProduct } from "@/lib/api/product";
+import { ProductDetail } from "@/components/products/product-detail";
+import { AddToCartButton } from "@/components/cart/add-to-cart-button";
 
 const ProductPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
@@ -24,8 +25,8 @@ const ProductPage = async ({ params }: { params: Promise<{ id: string }> }) => {
       <Breadcrumb className="mb-6">
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink>
-              <Link href="/products">Products</Link>
+            <BreadcrumbLink render={<Link href="/products" />}>
+              Products
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />

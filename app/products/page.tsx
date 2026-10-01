@@ -1,7 +1,7 @@
 import { SortOrder } from "@/types";
 import { SORT_ORDER } from "@/lib/constant";
 import { getCategories, getProducts } from "@/lib/api/product";
-import { ProductsExplorer, SortLinks } from "@/components";
+import { ProductsExplorer, SortLinks } from "@/components/products";
 
 const ProductsPage = async ({
   searchParams,
