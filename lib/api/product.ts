@@ -18,7 +18,7 @@ export const getProducts = async (sort?: SortOrder) => {
 };
 export const getCategories = async (): Promise<string[]> => {
   try {
-    const res = await fetch(`${BASE_URL}/products/categories`);
+    const res = await fetch(`https://fakestoreapi.com/products/categories`);
     if (!res.ok) {
       throw new Error(`Failed to fetch categories (status ${res.status})`);
     }
