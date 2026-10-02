@@ -5,8 +5,7 @@ export const getProducts = async (sort?: SortOrder) => {
   const query = sort ? `?sort=${sort}` : "";
 
   try {
-    // const response = await fetch(`${BASE_URL}/products${query}`);
-    const response = await fetch(`https://fakestoreapi.com/products${query}`);
+    const response = await fetch(`${BASE_URL}/products${query}`);
     if (!response.ok) {
       throw new Error(`Failed to fetch products (status ${response.status})`);
     }
@@ -18,7 +17,7 @@ export const getProducts = async (sort?: SortOrder) => {
 };
 export const getCategories = async (): Promise<string[]> => {
   try {
-    const res = await fetch(`https://fakestoreapi.com/products/categories`);
+    const res = await fetch(`${BASE_URL}/products/categories`);
     if (!res.ok) {
       throw new Error(`Failed to fetch categories (status ${res.status})`);
     }
