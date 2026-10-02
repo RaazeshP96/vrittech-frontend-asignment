@@ -17,15 +17,6 @@ export const apiFetch = async <T>(
   }
 
   if (!res.ok) {
-    console.error(
-      "API error",
-      res.status,
-      res.headers.get("cf-mitigated"),
-      (await res.clone().text()).slice(0, 300),
-    );
-  }
-
-  if (!res.ok) {
     throw new ApiError(
       `Request to ${path} failed (${res.status})`,
       "http",
