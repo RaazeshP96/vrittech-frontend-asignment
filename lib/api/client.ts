@@ -6,7 +6,7 @@ export const apiFetch = async <T>(
   init?: RequestInit,
 ): Promise<T> => {
   if (!BASE_URL) {
-    throw new ApiError("NEXT_PUBLIC_API_BASE_URL is not set", "config");
+    throw new ApiError("API_BASE_URL is not set", "config");
   }
 
   let res: Response;
