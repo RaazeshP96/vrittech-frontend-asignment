@@ -7,6 +7,12 @@ export const getProducts = async (sort?: SortOrder) => {
   try {
     const response = await fetch(`${BASE_URL}/products${query}`);
     if (!response.ok) {
+      console.error(
+        "API debug",
+        response.status,
+        response.headers.get("cf-mitigated"),
+        (await response.clone().text()).slice(0, 300),
+      );
       throw new Error(`Failed to fetch products (status ${response.status})`);
     }
     return await response.json();
@@ -18,10 +24,19 @@ export const getProducts = async (sort?: SortOrder) => {
 export const getCategories = async (): Promise<string[]> => {
   try {
     const res = await fetch(`${BASE_URL}/products/categories`);
-
     if (!res.ok) {
+      console.error(
+        "API debug",
+        res.status,
+        res.headers.get("cf-mitigated"),
+        (await res.clone().text()).slice(0, 300),
+      );
       throw new Error(`Failed to fetch categories (status ${res.status})`);
     }
+
+    // if (!res.ok) {
+    //   throw new Error(`Failed to fetch categories (status ${res.status})`);
+    // }
 
     return res.json();
   } catch (error) {
