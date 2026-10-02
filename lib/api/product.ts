@@ -5,7 +5,8 @@ export const getProducts = async (sort?: SortOrder) => {
   const query = sort ? `?sort=${sort}` : "";
 
   try {
-    const response = await fetch(`${BASE_URL}/products${query}`);
+    // const response = await fetch(`${BASE_URL}/products${query}`);
+    const response = await fetch(`https://fakestoreapi.com/products${query}`);
     if (!response.ok) {
       throw new Error(`Failed to fetch products (status ${response.status})`);
     }
